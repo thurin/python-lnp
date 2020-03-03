@@ -160,6 +160,16 @@ def install_graphics(pack):
 
         # TwbT file replacements
         if 'TWBT' in lnp.settings.printmode:
+            log.i("Need to Copy TWBT")
+
+            for folder in ['art', 'init']:
+                twbt_folder = paths.get('graphics', pack, 'data', 'twbt_' + folder)
+                target_folder = paths.get('df', 'data', folder)
+                for path, _, files in os.walk(twbt_folder):
+                    for f in files:
+                        twbt_f = os.path.join(path, f)
+                        target_f = os.path.join(target_folder, os.path.relpath(twbt_f, twbt_folder))
+                        shutil.copyfile(twbt_f, target_f)
             for folder in ['graphics', 'objects']:
                 twbt_folder = paths.get('graphics', pack, 'raw', 'twbt_'+folder)
                 target_folder = paths.get('df', 'raw', folder)
