@@ -99,6 +99,11 @@ class GraphicsTab(Tab):
 
         grid = GridLayouter(2)
         if 'legacy' not in lnp.df_info.variations:
+            grid.add(controls.create_trigger_option_button(
+                advanced, 'Install TWBT Folders',
+                'If graphics pack includes TWBT folders install them.',
+                self.toggle_insttwbt, 'insttwbt', lambda v: ('NO', 'YES')[
+                    lnp.userconfig.get_value('insttwbt', True)]), 2)
             grid.add(controls.create_option_button(
                 advanced, 'Print Mode',
                 'Changes how Dwarf Fortress draws to the screen. "2D" allows '
@@ -419,3 +424,10 @@ class GraphicsTab(Tab):
         graphics.install_tilesets(font, graphicsfont)
         binding.update()
         self.read_data()
+
+    @staticmethod
+    def toggle_insttwbt():
+        lnp.userconfig['insttwbt'] = not lnp.userconfig.get_value(
+            'insttwbt', True)
+        lnp.save_config()
+        binding.update()

@@ -159,7 +159,7 @@ def install_graphics(pack):
             pass
 
         # TwbT file replacements
-        if 'TWBT' in lnp.settings.printmode:
+        if lnp.userconfig.get_value('insttwbt', True):
             log.i("Need to Copy TWBT")
 
             for folder in ['art', 'init']:
