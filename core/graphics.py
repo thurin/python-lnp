@@ -159,7 +159,7 @@ def install_graphics(pack):
             pass
 
         # TwbT file replacements
-        if lnp.userconfig.get_value('insttwbt', True):
+        if ('twbt' in lnp.df_info.variations) & lnp.userconfig.get_value('insttwbt', True):
             log.i("Need to Copy TWBT")
 
             for folder in ['art', 'init']:
@@ -180,6 +180,8 @@ def install_graphics(pack):
                         target_f = os.path.join(target_folder, os.path.relpath(
                             twbt_f, twbt_folder))
                         shutil.copyfile(twbt_f, target_f)
+        else:
+            log.i("TWBT not configured")
 
     except:
         log.e('Something went wrong while installing graphics', stack=True)

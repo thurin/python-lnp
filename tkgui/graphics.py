@@ -6,7 +6,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import sys
 
-from core import colors, graphics, paths
+from core import colors, graphics, paths, log
 from core.lnp import lnp
 
 from . import controls, binding, tkhelpers
@@ -98,12 +98,14 @@ class GraphicsTab(Tab):
         advanced = controls.create_control_group(parent, title, True)
 
         grid = GridLayouter(2)
+        log.i("lnp.df_info.variations=".join(lnp.df_info.variations))
         if 'legacy' not in lnp.df_info.variations:
-            grid.add(controls.create_trigger_option_button(
-                advanced, 'Install TWBT Folders',
-                'If graphics pack includes TWBT folders install them.',
-                self.toggle_insttwbt, 'insttwbt', lambda v: ('NO', 'YES')[
-                    lnp.userconfig.get_value('insttwbt', True)]), 2)
+            if 'twbt' in lnp.df_info.variations:
+                grid.add(controls.create_trigger_option_button(
+                    advanced, 'Install TWBT Folders',
+                    'If graphics pack includes TWBT folders install them.',
+                    self.toggle_insttwbt, 'insttwbt', lambda v: ('NO', 'YES')[
+                        lnp.userconfig.get_value('insttwbt', True)]), 2)
             grid.add(controls.create_option_button(
                 advanced, 'Print Mode',
                 'Changes how Dwarf Fortress draws to the screen. "2D" allows '
